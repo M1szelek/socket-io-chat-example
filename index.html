@@ -22,7 +22,13 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
     $(function () {
+
+      var nickname = prompt("Your nickname");
+
       var socket = io();
+
+      socket.emit('new user', nickname);
+
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
@@ -36,7 +42,10 @@
       });
       socket.on('user connected', function(){
         $('#messages').append($('<li>').text('user connected'));
-      })
+      });
+      socket.on('users list', function(msg){
+        $('#messages').append($('<li>').text(msg));
+      });
     });
   </script>
 </body>
