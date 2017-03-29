@@ -8,13 +8,16 @@
     form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
     form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
     form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-    #messages { list-style-type: none; margin: 0; padding: 0; }
+    #messages { list-style-type: none; margin: 0; padding: 0; width: 80%; float: left; }
     #messages li { padding: 5px 10px; }
     #messages li:nth-child(odd) { background: #eee; }
+    #users-list { list-style-type: none; margin: 0; padding: 0; width: 20%; float: right; }
+    #users-list li { padding: 5px 10px; }
   </style>
 </head>
 <body>
   <ul id="messages"></ul>
+  <ul id="users-list"></ul>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
@@ -43,8 +46,11 @@
       socket.on('user connected', function(){
         $('#messages').append($('<li>').text('user connected'));
       });
-      socket.on('users list', function(msg){
-        $('#messages').append($('<li>').text(msg));
+      socket.on('users list', function(users){
+        $("#users-list").empty();
+        users.forEach(function(user){
+          $('#users-list').append($('<li>').text(user));
+        });
       });
     });
   </script>

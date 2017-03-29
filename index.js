@@ -29,7 +29,7 @@ app.get('/', function(req, res){
 var chat = new Chat();
 
 io.on('connection', function(socket){
-  io.emit('user connected', 'user connected');
+  socket.broadcast.emit('user connected', 'user connected');
 
   socket.on('new user', function(nickname){
     chat.addUser(nickname);
